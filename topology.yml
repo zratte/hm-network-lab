@@ -2,33 +2,32 @@ name: secure-log-transport
 
 topology:
   nodes:
-  # for the Site A
-  site-a-fw:
-    kind: linux
-    image: alpine:latest
-    cmd: sleep infinity
-  
-  site-a-host:
-    kind: linux
-    image: alpine:latest
-    cmd: sleep infinity
-  
-  #for Site B
-  site-b-fw:
-    kind: linux
-    image: alpine:latest
-    cmd: sleep infinity
+    #Site A
+    site-a-fw:
+      kind: linux
+      image: alpine:latest
+      cmd: sleep infinity
+      
+    site-a-host:
+      kind: linux
+      image: alpine:latest
+      cmd: sleep infinity
 
-  site-b-collector:
-    kind: linux
-    image: alpine:latest
-    cmd: sleep infinity
+    #Site B
+    site-b-fw:
+      kind: linux
+      image: alpine:latest
+      cmd: sleep infinity
+      
+    site-b-collector:
+      kind: linux
+      image: alpine:latest
+      cmd: sleep infinity
 
-links:
-  #Connecting Site A host to Site A firewall
-  - endpoints: ["site-a-host:eth1", "site-a-fw:eth1"]
-  #Untusted path connecting two firewalls
-  - endpoints: ["site-a-fw:eth2", "site-b-fw:eth1"]
-  #Connecting Site B firewall to Site B collector
-  - endpoints: ["site-b-fw:eth2", "site-b-collector:eth1"]
-
+  links:
+    # Connecting Site A host to Site A firewall
+    - endpoints: ["site-a-host:eth1", "site-a-fw:eth1"]
+    # Untrusted path connecting two firewalls
+    - endpoints: ["site-a-fw:eth2", "site-b-fw:eth1"]
+    # Connecting Site B firewall to Site B collector
+    - endpoints: ["site-b-fw:eth2", "site-b-collector:eth1"]
